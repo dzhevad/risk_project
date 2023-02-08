@@ -29,17 +29,19 @@ void esmgozari();
 int daryaft_sarbaz(int tedad_zamin , char bazikon ); 
 
 void pakhsh_khodkar_sarbaz();
+void jagozari_sarbaza1( );
+void jagozari_sarbaz2( char nobat , int tedad_sarbaz);
+
+void jabejayi();
 
 
-
-
-
-/*risk project*/
 
 int tas();
+int check( int x , int y , char player );
 
 void sort(int array[] , int size);
 
+int check_hamsaye(int x , int y , int i , int j);
 
 struct  player1{
 	int sarbaz ;
@@ -69,7 +71,7 @@ struct zamin{
 
 int main(void) {
 	
-	int tedad_bazikon;
+	int tedad_bazikon = 0 ;
 	
 	
 	al_init();
@@ -82,7 +84,7 @@ int main(void) {
 	
 	
 	
-	
+
 	ALLEGRO_DISPLAY *display = al_create_display(LENGHT , WIDTH);
 	ALLEGRO_FONT *font = al_load_ttf_font("arial.ttf" , 24 , 0);
 	ALLEGRO_FONT *font1 = al_load_ttf_font("arial.ttf" , 10 , 0);
@@ -91,8 +93,8 @@ int main(void) {
 	ALLEGRO_KEYBOARD_STATE keystate;		// gereftan keyboard 
 	 
 	
-	
-	
+
+	// rgb = red + green + blue = (0-255) + (0 - 255) + (0 -255) 
 	
 	
 	
@@ -127,25 +129,40 @@ int main(void) {
 	
 	do{
 		al_clear_to_color(al_map_rgb(255,255,255));
+		al_get_mouse_state(&curstate);
 		
 		al_draw_text(font , al_map_rgb(0,0,0) , 170 , 250 , 0 , "tedad bazikon ra moshakhas konid :");
 		
 		al_draw_filled_rectangle(200 , 300 , 300 , 400 ,al_map_rgb(0,255,0));	
 		al_draw_text(font , al_map_rgb(0,0,0) , 240 , 340 , 0 , "2");
+		if(curstate.x > 200 && curstate.x <300 && curstate.y>300 && curstate.y<400){
+			if(al_mouse_button_down(&curstate,1)){
+		 		tedad_bazikon = 2;
+			}
+		}
 		
 		
 		al_draw_filled_rectangle(310 , 300 , 410 , 400 ,al_map_rgb(0,255,0));	
 		al_draw_text(font , al_map_rgb(0,0,0) , 350 , 340 , 0 , "3");
 		
+		if(curstate.x > 310 && curstate.x <410 && curstate.y>300 && curstate.y<400){
+			if(al_mouse_button_down(&curstate,1)){
+		 		tedad_bazikon = 3;
+			}
+		}
 		
 		al_draw_filled_rectangle(420 , 300 , 520 , 400 ,al_map_rgb(0,255,0));	
 		al_draw_text(font , al_map_rgb(0,0,0) , 460 , 340 , 0 , "4");
 		
-		al_get_keyboard_state(&keystate);
+		if(curstate.x > 420 && curstate.x <520 && curstate.y>300 && curstate.y<400){
+			if(al_mouse_button_down(&curstate,1)){
+		 		tedad_bazikon = 4;
+			}
+		}
 		
 		
 		al_flip_display();
-	}while(!al_key_down(&keystate,ALLEGRO_KEY_TAB));
+	}while( tedad_bazikon == 0);
 	
 	
 	
@@ -172,10 +189,10 @@ int main(void) {
 	pakhsh_zamin(tedad_bazikon);
 	pakhsh_khodkar_sarbaz();
 	
-	// rgb = red + green + blue = (0-255) + (0 - 255) + (0 -255) 
 	
-
-	do {
+	
+		
+	/*do {
 		al_clear_to_color(al_map_rgb(255 , 255 ,255));
 		al_get_mouse_state(&curstate);
 		al_get_keyboard_state(&keystate);
@@ -183,9 +200,9 @@ int main(void) {
 		draw_map();
 		print();
 
-		al_draw_rectangle(350 , 50 , 470 , 100 , al_map_rgb(0,0,0),2);
-		al_draw_text(font2 ,al_map_rgb(0,0,0) , 355 , 70 , 0 , "nobat bazikon");
-		//al_draw_text(font2 ,al_map_rgb(0,0,0) , 450 , 70 , 0 , /* character nobat*/);
+		
+		
+		//al_draw_text(font2 ,al_map_rgb(0,0,0) , 450 , 70 , 0 ,  character nobat);
 		
 		
 		
@@ -200,9 +217,59 @@ int main(void) {
 		
 		al_flip_display();
 		al_rest(0.5);
+		
+		
+		
+		
 	}while(!al_key_down(&keystate,ALLEGRO_KEY_ESCAPE));
-	
-	
+	*/
+	void jagozari_sarbaza1();
+
+
+	int nobat=1;
+	char tmp[10];
+	for(nobat = 1 ; nobat <= tedad_bazikon ; nobat++){
+		
+		al_clear_to_color(al_map_rgb(255 , 255 ,255));
+		al_get_mouse_state(&curstate);
+		al_get_keyboard_state(&keystate);
+		
+		draw_map();
+		print();
+		
+		al_draw_rectangle(350 , 50 , 470 , 100 , al_map_rgb(0,0,0),2);
+		al_draw_text(font2 ,al_map_rgb(0,0,0) , 355 , 70 , 0 , "nobat bazikon");
+		al_draw_text(font1 ,al_map_rgb(0,0,0) , 724 , 640 , 0 , "Press Esc to exit");
+		
+		al_flip_display();
+		
+		
+		
+		
+		
+		if(nobat == 1 && player1.tedad_zamin > 0 ){
+			al_draw_text(font2 ,al_map_rgb(0,0,0) , 450 , 70 , 0 ,  "1");
+			itoa(nobat, tmp, 10);
+			player1.sarbaz =  daryaft_sarbaz(player1.tedad_zamin , tmp );
+			jagozari_sarbaz2(  '1' , player1.sarbaz);
+			
+		}
+
+
+		if(nobat == tedad_bazikon){
+			nobat = 1;
+		}
+		
+		if(al_key_down(&keystate,ALLEGRO_KEY_ESCAPE)){
+			break;
+		}
+	}
+
+
+
+
+
+
 	
 	return 0;
 }
@@ -289,8 +356,7 @@ void draw_map(){
 	
 	for(int i = 1 ; i<=7 ; i++){
 		for(int j =1 ; j<=6 ; j ++){
-			al_draw_rectangle(j*100 , i*50+100 , j*100+100 , i*50+150 , al_map_rgb(0,0,0),2);
-			
+			al_draw_rectangle(j*100 , i*50+100 , j*100+100 , i*50+150 , al_map_rgb(0,0,0),2);	
 		}
 	}
 	
@@ -306,7 +372,7 @@ void print(){
 		for(int j =1 ; j<=6 ; j ++){
 			if(zamin.esm[i-1][j-1][0] != 'D'){
 				char tmp[10];
-				al_draw_text(font1 ,al_map_rgb(0,0,0) , j*100+10 , i*50+110 , 0 , "player ");
+				al_draw_text(font1 ,al_map_rgb(0,0,0) , j*100+5 , i*50+105 , 0 , "player ");
 				al_draw_text(font1 ,al_map_rgb(0,0,0) , j*100+40 , i*50+110 , 0 , zamin.malek[i-1][j-1]);
 				itoa(zamin.tedad_sarbaz[i-1][j-1], tmp, 10);
 				al_draw_text(font ,al_map_rgb(0,0,0) , j*100+50 , i*50+120 , 0 ,tmp);
@@ -314,6 +380,7 @@ void print(){
 		}
 	}
 }
+
 
 void esmgozari(){
 	
@@ -379,6 +446,7 @@ void esmgozari(){
 }
 
 
+// barresi 
 
 void pakhsh_zamin(int tedad_bazikon){
 	
@@ -446,27 +514,158 @@ void pakhsh_khodkar_sarbaz(){
 
 
 
+void jagozari_sarbaza1( ){
+	ALLEGRO_MOUSE_STATE curstate;
+	int i , j;
+	int a = 0;
+	while(player1.sarbaz != 0 && player2.sarbaz != 0 && player3.sarbaz !=0 && player4.sarbaz != 0){
+
+		a = 0;
+
+		if(player1.sarbaz != 0){
+			do{
+				al_get_mouse_state(&curstate);
+				if(curstate.x > 100 && curstate.x <700 && curstate.y>150 && curstate.y<500){
+					if(al_mouse_button_down(&curstate,1)){
+						i = (curstate.y-150)/50;
+						j = (curstate.x-100)/100;
+						a = check( i , j , '1' );
+						if(a == 1){
+							zamin.tedad_sarbaz[i][j]++;
+							player1.sarbaz--;
+						}
+					}
+				}
+			}while( a != 1);
+		}
+
+		a = 0;
+
+		if(player2.sarbaz != 0){
+			do{
+				al_get_mouse_state(&curstate);
+				if(curstate.x > 100 && curstate.x <700 && curstate.y>150 && curstate.y<500){
+					if(al_mouse_button_down(&curstate,1)){
+						i = (curstate.y-150)/50;
+						j = (curstate.x-100)/100;
+						a = check( i , j , '2' );
+						if(a == 1){
+							zamin.tedad_sarbaz[i][j]++;
+							player2.sarbaz--;
+						}
+					}
+				}
+			}while( a != 1);
+		}
+
+		a = 0;
+
+		if(player3.sarbaz != 0){
+			do{
+				al_get_mouse_state(&curstate);
+				if(curstate.x > 100 && curstate.x <700 && curstate.y>150 && curstate.y<500){
+					if(al_mouse_button_down(&curstate,1)){
+						i = (curstate.y-150)/50;
+						j = (curstate.x-100)/100;
+						a = check( i , j , '3' );
+						if(a == 1){
+							zamin.tedad_sarbaz[i][j]++;
+							player3.sarbaz--;
+						}
+					}
+				}
+			}while( a != 1);
+		}
+
+		a = 0;
+
+		if(player4.sarbaz != 0){
+			do{
+				al_get_mouse_state(&curstate);
+				if(curstate.x > 100 && curstate.x <700 && curstate.y>150 && curstate.y<500){
+					if(al_mouse_button_down(&curstate,1)){
+						i = (curstate.y-150)/50;
+						j = (curstate.x-100)/100;
+						a = check( i , j , '4' );
+						if(a == 1){
+							zamin.tedad_sarbaz[i][j]++;
+							player4.sarbaz--;
+						}
+					}
+				}
+			}while( a != 1);
+		}
+
+	}
+}
+
+
+
+
+void jagozari_sarbaz2( char nobat , int tedad_sarbaz){
+	ALLEGRO_MOUSE_STATE curstate;
+	int a = 0;
+	int i,j;
+	while(tedad_sarbaz != 0 ){
+		a = 0;
+		do{
+			al_get_mouse_state(&curstate);
+			if(curstate.x > 100 && curstate.x <700 && curstate.y>150 && curstate.y<500){
+				if(al_mouse_button_down(&curstate,1)){
+					i = (curstate.y-150)/50;
+					j = (curstate.x-100)/100;
+					a = check( i , j , nobat );
+					if(a == 1){
+						zamin.tedad_sarbaz[i][j]++;
+						tedad_sarbaz--;
+					}
+				}
+			}
+		}while( a != 1);
+	}
+
+
+
+}
+
 
 
 // barresi shavad
 
-/*
+
 void nabard(char player){
-	
+	ALLEGRO_MOUSE_STATE curstate;
+	int i , j ;
+	int x,y;
+	int a;
+	int tas_hamle[3];
+	int tas_defa[2];
 	while (1){			//? zadan kelid exit 
+		al_get_mouse_state(&curstate);
+		if(curstate.x > 100 && curstate.x <700 && curstate.y>150 && curstate.y<500){
+			if(al_mouse_button_down(&curstate,1)){
+				i = (curstate.y-150)/50;
+				j = (curstate.x-100)/100;
+				a = check( i , j ,player );
+			}
+		}
 		
-		// ? gereftan i , j;
-		int i , j ;
-		int x,y;
-		int tas_hamle[3];
-		int tas_defa[2];
 		
 
-		if(check( i ,j , player , zamin.malek[7][6][0]) == 1){
-			
-					//? gereftan x , y;
-					
-					if(tedad_sarbaz[i][j]>1 && zamin.esm[x][y][0] != 'D' && zamin.malek[x][y] != player){
+		if(a == 1){
+			a = 0;
+			while(a==0){
+				
+				if(curstate.x > 100 && curstate.x <700 && curstate.y>150 && curstate.y<500){
+					if(al_mouse_button_down(&curstate,1)){
+						i = (curstate.y-150)/50;
+						j = (curstate.x-100)/100;
+						a = check( i , j , player );
+					}
+				}
+				
+				if (a == 1){
+					if(zamin.tedad_sarbaz[i][j]>1 && zamin.esm[x][y][0] != 'D' && zamin.malek[x][y] != player && check_hamsaye( x ,  y ,  i ,  j) == 1){
 						tas_hamle[0] = tas();
 						tas_hamle[1] = tas();
 						tas_hamle[2] = tas();
@@ -483,67 +682,54 @@ void nabard(char player){
 						else{
 							zamin.tedad_sarbaz[x][y]--;
 						}
-						
-						if(tedad_sarbaz[i][j]>=3 && tedad_sarbaz[x][y]>1){
+					
+						if(zamin.tedad_sarbaz[i][j]>=3 && zamin.tedad_sarbaz[x][y]>1){
 							if(tas_defa[1]>= tas_hamle[1]){
 								zamin.tedad_sarbaz[i][j]--;
 							}
 							else{
 								zamin.tedad_sarbaz[x][y]--;
 							}
-						}
-												
+						}								
 						if(zamin.tedad_sarbaz[x][y] == 0 ){
-							zamin.malek[x][y] = player;
+							zamin.malek[x][y][0] = player;
 						}
 					}
+				}
+				
+				a = 0;
+				
+		
+			
+					
+					
+					
 
 				}
 			}
 		}
 	}
-}
-*/
-// barresi shavad
 
+// barresi shavad
 /*
 
-void jagozari_sarbaza1( int tedad_bazikon , int tedad_sarbaz[7][6] ){
-	int i , j;
-	
-	while(player1.sarbaz != 0 && player2.sarbaz != 0 && player3.sarbaz !=0 && player4.sarbaz != 0){
-		for(int i = 0 ; i<tedad_bazikon ; i++){
-			if(player1.sarbaz != 0){
-				// ? get the i , j;
-				if(check == 1){
-					tedad_sarbaz[i][j] ++;
-					player1.sarbaz--;
-				}
-			}
-			if(player2.sarbaz != 0){
-				// ? get the i , j;
-				if(check == 1 ){
-					tedad_sarbaz[i][j]++;
-					player2.sarbaz--;
-				}
-			}
-			if(player3.sarbaz != 0){
-				// ? get the i , j;
-				if(check == 1){
-					tedad_sarbaz[i][j]++;
-					player3.sarbaz--;
-				}
-			}
-			if(player4.sarbaz != 0){
-				// ? get the i , j;
-				if(check == 1 ){
-					tedad_sarbaz[i][j]++;
-					player4.sarbaz--;
-				}
+void jabejayi(char nobat){
+	int i,j;
+	int x,y;
+	int a = 0 , b = 0;
+	while ( a == 0){
+		al_get_mouse_state(&curstate);
+		if(curstate.x > 100 && curstate.x <700 && curstate.y>150 && curstate.y<500){
+			if(al_mouse_button_down(&curstate,1)){
+				i = (curstate.y-150)/50;
+				j = (curstate.x-100)/100;
+				a = check( i , j , nobat );
 			}
 		}
+		
 	}
 }
+
 */
 
 
@@ -576,7 +762,7 @@ void sort(int array[] , int size) {
 
 
 
-int check ( int x , int y , char player ){
+int check( int x , int y , char player ){
 	
 	if (zamin.malek[x][y][0] == player){
 		return 1;
@@ -585,6 +771,26 @@ int check ( int x , int y , char player ){
 		return 0;
 	}
 }
+
+
+int check_hamsaye(int x , int y , int i , int j){
+	if( x == i-1 && y == j){
+		return 1;
+	}
+	else if( x == i+1 && y == j){
+		return 1;
+	}
+	else if( x == i && y == j-1){
+		return 1;
+	}
+	else if( x == i && y == j+1){
+		return 1;
+	}
+	else {
+		return 0;
+	}	
+}
+
 
 
 
