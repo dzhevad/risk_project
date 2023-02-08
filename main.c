@@ -34,7 +34,7 @@ void pakhsh_khodkar_sarbaz();
 
 
 
-
+/*risk project*/
 
 int tas();
 
