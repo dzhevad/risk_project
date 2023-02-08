@@ -206,7 +206,7 @@ int main(void) {
 		
 
 	
-	void jagozari_sarbaza1();
+	jagozari_sarbaza1();
 	
 
 	int nobat=1;
@@ -229,18 +229,16 @@ int main(void) {
 		
 		
 		
-		
-		
 		if(nobat == 1 && player1.tedad_zamin > 0 ){
 			al_draw_text(font2 ,al_map_rgb(0,0,0) , 450 , 70 , 0 ,  "1");
-			
+			al_rest(1);
 			
 			itoa(nobat, tmp, 10);
 			
-			player1.sarbaz =  daryaft_sarbaz(player1.tedad_zamin , tmp );
+			player1.sarbaz =  daryaft_sarbaz(player1.tedad_zamin , '1' );
 			jagozari_sarbaz2(  '1' , player1.sarbaz);
 			nabard('1');
-			al_rest(1);
+			
 			
 			if(al_key_down(&keystate,ALLEGRO_KEY_ESCAPE)){
 				break;
@@ -252,7 +250,7 @@ int main(void) {
 			
 			itoa(nobat, tmp, 10);
 			
-			player2.sarbaz =  daryaft_sarbaz(player2.tedad_zamin , tmp );
+			player2.sarbaz =  daryaft_sarbaz(player2.tedad_zamin , '2' );
 			jagozari_sarbaz2(  '2' , player1.sarbaz);
 			nabard('2');
 			al_rest(1);
@@ -266,7 +264,7 @@ int main(void) {
 			
 			itoa(nobat, tmp, 10);
 			
-			player3.sarbaz =  daryaft_sarbaz(player3.tedad_zamin , tmp );
+			player3.sarbaz =  daryaft_sarbaz(player3.tedad_zamin , '3' );
 			jagozari_sarbaz2(  '3' , player1.sarbaz);
 			nabard('3');
 			al_rest(1);
@@ -280,7 +278,7 @@ int main(void) {
 			
 			itoa(nobat, tmp, 10);
 			
-			player4.sarbaz =  daryaft_sarbaz(player4.tedad_zamin , tmp );
+			player4.sarbaz =  daryaft_sarbaz(player4.tedad_zamin , '3' );
 			jagozari_sarbaz2(  '4' , player1.sarbaz);
 			nabard('4');
 			al_rest(1);
@@ -298,6 +296,42 @@ int main(void) {
 		if(al_key_down(&keystate,ALLEGRO_KEY_ESCAPE)){
 			break;
 		}
+		
+		
+		if(player1.tedad_zamin == 29 || player2.tedad_zamin == 29 || player3.tedad_zamin ==29 || player4.tedad_zamin == 29){
+			break;
+		}
+		
+		al_flip_display();
+		
+		
+		
+	}
+	
+	
+	
+	while(!al_key_down(&keystate , ALLEGRO_KEY_ESCAPE)){
+		al_get_keyboard_state(&keystate);
+		
+		draw_map();
+		
+		
+		al_draw_filled_rectangle(350,300,550,350,al_map_rgb(255,255,255));
+		
+		
+		if(player1.tedad_zamin == 29){
+			al_draw_text(font , al_map_rgb(0,0,0) , 355 , 310 , 0 , "Player 1 Won!!!");
+		}
+		if(player2.tedad_zamin == 29){
+			al_draw_text(font , al_map_rgb(0,0,0) , 355 , 310 , 0 , "Player 2 Won!!!");
+		}
+		if(player3.tedad_zamin == 29){
+			al_draw_text(font , al_map_rgb(0,0,0) , 355 , 310 , 0 , "Player 3 Won!!!");
+		}
+		if(player4.tedad_zamin == 29){
+			al_draw_text(font , al_map_rgb(0,0,0) , 355 , 310 , 0 , "Player 4 Won!!!");
+		}
+		
 		al_flip_display();
 	}
 
@@ -414,14 +448,18 @@ void draw_map(){
 void print(){
 	ALLEGRO_FONT *font = al_load_ttf_font("arial.ttf" , 15 , 0);
 	ALLEGRO_FONT *font1 = al_load_ttf_font("arial.ttf" , 10 , 0);
+	char tmp[10];
 	for(int i = 1 ; i<=7 ; i++){
 		for(int j =1 ; j<=6 ; j ++){
 			if(zamin.esm[i-1][j-1][0] != 'D'){
-				char tmp[10];
+				tmp[0] = '\0';
 				al_draw_text(font1 ,al_map_rgb(0,0,0) , j*100+5 , i*50+105 , 0 , "player ");
-				al_draw_text(font1 ,al_map_rgb(0,0,0) , j*100+40 , i*50+110 , 0 , zamin.malek[i-1][j-1]);
+		
 				itoa(zamin.tedad_sarbaz[i-1][j-1], tmp, 10);
+				
 				al_draw_text(font ,al_map_rgb(0,0,0) , j*100+50 , i*50+120 , 0 ,tmp);
+				
+				al_draw_text(font1 ,al_map_rgb(0,0,0) , j*100+40 , i*50+110 , 0 , zamin.malek[i-1][j-1]);
 			}
 		}
 	}
@@ -495,7 +533,111 @@ void esmgozari(){
 // barresi 
 
 void pakhsh_zamin(int tedad_bazikon){
-	
+	if(tedad_bazikon == 2 ){
+		zamin.malek[0][0][0] = '1';
+		zamin.malek[0][1][0] = '1';
+		zamin.malek[1][0][0] = '1';
+		zamin.malek[1][1][0] = '1';
+		zamin.malek[2][0][0] = '1';
+		zamin.malek[3][0][0] = '1';
+		zamin.malek[0][2][0] = '1';
+		zamin.malek[1][2][0] = '1';
+		zamin.malek[0][3][0] = '1';
+		zamin.malek[1][3][0] = '1';
+		zamin.malek[2][3][0] = '1';
+		zamin.malek[3][3][0] = '1';
+		zamin.malek[4][3][0] = '1';
+		zamin.malek[4][2][0] = '1';
+		zamin.malek[3][4][0] = '1';
+
+		zamin.malek[0][4][0] = '2';
+		zamin.malek[0][5][0] = '2';
+		zamin.malek[1][4][0] = '2';
+		zamin.malek[1][5][0] = '2';
+		zamin.malek[2][2][0] = '2';
+		zamin.malek[4][0][0] = '2';
+		zamin.malek[5][0][0] = '2';
+		zamin.malek[5][1][0] = '2';
+		zamin.malek[5][2][0] = '2';
+		zamin.malek[5][3][0] = '2';
+		zamin.malek[2][4][0] = '2';
+		zamin.malek[2][5][0] = '2';
+		zamin.malek[3][5][0] = '2';
+		zamin.malek[6][2][0] = '2';
+	}
+
+	if(tedad_bazikon == 3 ){
+		zamin.malek[0][0][0] = '1';
+		zamin.malek[0][1][0] = '1';
+		zamin.malek[1][4][0] = '1';
+		zamin.malek[1][3][0] = '1';
+		zamin.malek[2][0][0] = '1';
+		zamin.malek[2][2][0] = '1';
+		zamin.malek[4][0][0] = '1';
+		zamin.malek[3][5][0] = '1';
+		zamin.malek[5][0][0] = '1';
+
+		zamin.malek[0][2][0] = '2';
+		zamin.malek[0][3][0] = '2';
+		zamin.malek[1][2][0] = '2';
+		zamin.malek[1][1][0] = '2';
+		zamin.malek[2][3][0] = '2';
+		zamin.malek[2][4][0] = '2';
+		zamin.malek[3][4][0] = '2';
+		zamin.malek[3][3][0] = '2';
+		zamin.malek[5][1][0] = '2';
+		zamin.malek[5][3][0] = '2';
+
+		zamin.malek[0][4][0] = '3';
+		zamin.malek[0][5][0] = '3';
+		zamin.malek[1][0][0] = '3';
+		zamin.malek[1][5][0] = '3';
+		zamin.malek[2][5][0] = '3';
+		zamin.malek[4][2][0] = '3';
+		zamin.malek[3][0][0] = '3';
+		zamin.malek[4][3][0] = '3';
+		zamin.malek[5][2][0] = '3';
+		zamin.malek[6][2][0] = '3';
+
+	}
+
+	if(tedad_bazikon == 4 ){
+		zamin.malek[0][0][0] = '1';
+		zamin.malek[0][1][0] = '1';
+		zamin.malek[1][2][0] = '1';
+		zamin.malek[1][1][0] = '1';
+		zamin.malek[2][5][0] = '1';
+		zamin.malek[5][3][0] = '1';
+		zamin.malek[4][0][0] = '1';
+
+		zamin.malek[0][2][0] = '2';
+		zamin.malek[0][3][0] = '2';
+		zamin.malek[1][0][0] = '2';
+		zamin.malek[1][5][0] = '2';
+		zamin.malek[5][2][0] = '2';
+		zamin.malek[5][1][0] = '2';
+		zamin.malek[3][5][0] = '2';
+
+		zamin.malek[0][4][0] = '3';
+		zamin.malek[0][5][0] = '3';
+		zamin.malek[2][0][0] = '3';
+		zamin.malek[2][2][0] = '3';
+		zamin.malek[5][0][0] = '3';
+		zamin.malek[4][3][0] = '3';
+		zamin.malek[3][4][0] = '3';
+		
+		zamin.malek[1][4][0] = '4';
+		zamin.malek[1][3][0] = '4';
+		zamin.malek[2][3][0] = '4';
+		zamin.malek[2][4][0] = '4';
+		zamin.malek[6][2][0] = '4';
+		zamin.malek[3][0][0] = '4';
+		zamin.malek[3][3][0] = '4';
+		zamin.malek[4][2][0] = '4';
+		
+		
+
+	}
 	
 }
 
@@ -682,6 +824,7 @@ void jagozari_sarbaz2( char nobat , int tedad_sarbaz){
 void nabard(char player){
 
 	ALLEGRO_MOUSE_STATE curstate;
+	ALLEGRO_KEYBOARD_STATE keystate;
 	
 	ALLEGRO_FONT *font = al_load_ttf_font("arial.ttf" , 15 , 0);
 	int vaziat =0;
@@ -696,7 +839,7 @@ void nabard(char player){
 	//	al_draw_filled_rectangle(curstate.x , curstate.y , curstate.x+5 , curstate.y+5 , al_map_rgb(0,0,0));
 		while(vaziat == 0){
 			b = 0;
-		al_get_mouse_state(&curstate);
+			al_get_mouse_state(&curstate);
 			al_draw_filled_rectangle(200 , 520 , 250 , 550 , al_map_rgb(0,255,0));
 			al_draw_text(font , al_map_rgb(0,0,0) , 203 , 523 , 0 , "continue");
 			al_draw_filled_rectangle(260 , 520 , 310 , 550 , al_map_rgb(255,0,0));
@@ -728,6 +871,9 @@ void nabard(char player){
 			
 		while(a==0){
 			al_get_mouse_state(&curstate);
+			
+		
+			
 			if(curstate.x > 100 && curstate.x <700 && curstate.y>150 && curstate.y<500){
 				if(al_mouse_button_down(&curstate,1)){
 					//	printf("%d:%d",curstate.x ,curstate.y);
@@ -744,17 +890,47 @@ void nabard(char player){
 		if(a == 1){
 			while(b==0){
 				al_get_mouse_state(&curstate);
-				if(curstate.x > 100 && curstate.x <700 && curstate.y>150 && curstate.y<500){
+				al_get_keyboard_state(&keystate);
+				if( al_key_down(&keystate , ALLEGRO_KEY_PGUP)  && i>0){
+					x = i-1 ;
+					y = j;
+					b = check_hamsaye(x,y,i,j);
+				}
+				if( al_key_down(&keystate , ALLEGRO_KEY_PGDN)  && i<5){
+					x = i+1 ;
+					y = j;
+					b = check_hamsaye(x,y,i,j);
+				}
+				if( al_key_down(&keystate , ALLEGRO_KEY_LEFT)  && j>0){
+					x = i ;
+					y = j-1;
+					b = check_hamsaye(x,y,i,j);
+				}
+				if( al_key_down(&keystate , ALLEGRO_KEY_RIGHT)  && j<5){
+					x = i ;
+					y = j+1;
+					b = check_hamsaye(x,y,i,j);
+				}
+			
+			if(b==1){
+				printf("keyboard");
+			}
+			
+			
+			
+			
+			
+			/*	if(curstate.x > 100 && curstate.x <700 && curstate.y>150 && curstate.y<500){
 					if(al_mouse_button_down(&curstate,1)){
 						//	printf("%d:%d",curstate.x ,curstate.y);
 						i = (curstate.y-150)/50;
 						j = (curstate.x-100)/100;
 						b= check( i , j , player );
 					}
-				}
+				}*/
 				
 				if (b == 1){
-					if(zamin.tedad_sarbaz[i][j]>1 && zamin.esm[x][y][0] != 'D' && zamin.malek[x][y] != player && check_hamsaye( x ,  y ,  i ,  j) == 1){
+					if(zamin.tedad_sarbaz[i][j]>1 && zamin.esm[x][y][0] != 'D' && zamin.malek[x][y][0] != player && check_hamsaye( x ,  y ,  i ,  j) == 1){
 						tas_hamle[0] = tas();
 						tas_hamle[1] = tas();
 						tas_hamle[2] = tas();
